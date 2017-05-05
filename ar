@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# Bash strict mode: http://redsymbol.net/articles/unofficial-bash-strict-mode/
+set -o nounset   # Using an undefined variable is fatal
+set -o errexit   # A sub-process/shell returning non-zero is fatal
+set -o pipefail  # If a pipeline step fails, it's RC is the pipelines return code
+#set -o xtrace    # Output a complete trace of all bash actions; uncomment for debugging
+
+#IFS=$'\n\t'  # Only split strings on newlines & tabs, not spaces.
+
+#
+# Run ansible review
+#
+
+# Put the ansible-review config in the correct place
+mkdir -p ~/.config/ansible-review
+envsubst < "./ansible-review/ansible-review.ini" > ~/.config/ansible-review/config.ini
+
+find ./ansible | xargs ansible-review -v
+
+# Run ansible-review and post-process the output
+# python ./ansible-review/ansible-review-post-process.py
