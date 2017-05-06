@@ -1,0 +1,10 @@
+---
+
+- name: setup vars
+  set_fact:
+    myvar: 'World!'
+
+- name: test task
+  template:
+    src: script.sh.j2
+    dest: /tmp/script.sh
